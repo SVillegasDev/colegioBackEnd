@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render 
+from app.models import *
 
-# Create your views here.
+def panelAlumno(request,id):
+    alumno = Alumno.objects.get(id=id)
+
+    datos = {'alumno':alumno}
+    return render(request,'panelAlumno.html',datos)
