@@ -20,4 +20,5 @@ from app import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("panelAlumno/<int:id>",views.panelAlumno,name="panelAlumno"),
+    path("agregarProfesor/",views.agregarProfesor,name="agregarProfesor"),
 ]
