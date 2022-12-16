@@ -21,6 +21,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),    
     path("panelAlumno/<int:id>",views.panelAlumno,name="panelAlumno"),
     path('panelAdministrador/', views.panelAdministrador),
-    path("agregarProfesor/",views.agregarProfesor,name="agregarProfesor"),
-
+    path("profesores/",views.listaProfesor.as_view()),
+    path("profesores/<int:pk>",views.listaProfesor.as_view()),
 ]
