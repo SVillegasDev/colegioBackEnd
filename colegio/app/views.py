@@ -2,18 +2,18 @@ from django.shortcuts import render
 from app.models import *
 from .forms import ProfesorForm
 
-def index(request):
-    return render(request, 'index.html')
-
 def panelAlumno(request,id):
     alumno = Alumno.objects.get(id=id)
 
     datos = {'alumno':alumno}
     return render(request,'panelAlumno.html',datos)
 
+
+def panelAdministrador(request):
+    return render(request, 'panelAdministrador.html')
+
+
 def agregarProfesor(request):
-
-
 
     data = {
         'form': ProfesorForm
