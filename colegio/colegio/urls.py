@@ -18,7 +18,9 @@ from django.urls import path
 from app import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls),    
     path("panelAlumno/<int:id>",views.panelAlumno,name="panelAlumno"),
-    path("agregarProfesor/",views.agregarProfesor,name="agregarProfesor"),
+    path('panelAdministrador/', views.panelAdministrador),
+    path("profesores/",views.listaProfesor.as_view()),
+    path("profesores/<int:pk>",views.listaProfesor.as_view()),
 ]
