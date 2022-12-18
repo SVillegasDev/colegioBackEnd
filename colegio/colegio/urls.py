@@ -20,6 +20,13 @@ from app import views
 urlpatterns = [
     path("admin/", admin.site.urls),    
     path("panelAlumno/<int:id>",views.panelAlumno,name="panelAlumno"),
+    path("panelCurso/",views.panelCurso,name='panelCurso'),
+    path("editarCurso/<int:id>",views.editarCurso,name='editarCurso'),
+    path("borrarCurso/<int:id>",views.borrarCurso,name='borrarCurso'),
+    path("panelAsignatura/",views.panelAsignatura,name='panelAsignatura'),
+    path("editarAsignatura/<int:id>",views.editarAsignatura,name='editarAsignatura'),
+    path("borrarAsignatura/<int:id>",views.borrarAsignatura,name='borrarAsignatura'),
+    path("panelRegistroAlumno/",views.panelRegistroAlumno,name='panelRegistroAlumno'),
     path('panelAdministrador/', views.panelAdministrador),
     path("profesores/",views.listaProfesor.as_view()),
     path("profesores/<int:pk>",views.listaProfesor.as_view()),

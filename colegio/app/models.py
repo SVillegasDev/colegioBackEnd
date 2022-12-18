@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User  
+
 
 # Create your models here.
 class Direccion(models.Model):
@@ -13,6 +14,9 @@ class Institucion(models.Model):
     nombre = models.CharField(max_length=45,null=False,default='')
     direccion = models.ForeignKey(Direccion,on_delete=models.CASCADE,null=False)
 
+    def __str__(self):
+        return self.nombre
+
 class User(models.Model):
     id = models.BigAutoField(auto_created=True,primary_key=True)
     username = models.CharField(max_length=45,null=False,default='')
@@ -21,7 +25,7 @@ class User(models.Model):
     apellidoPaterno = models.CharField(max_length=45,null=False,default='')
     apellidoMaterno = models.CharField(max_length=45,null=True,default='')
     direccion = models.ForeignKey(Direccion,on_delete=models.CASCADE,null=True)
-    nacimiento = models.DateField(null=True)
+    nacimiento = models.DateTimeField(null=True)
     estado = models.BooleanField(null=False,default=True)
     institucion = models.ForeignKey(Institucion,on_delete=models.CASCADE,null=False,default='')
 
@@ -34,10 +38,13 @@ class Curso(models.Model):
     id = models.BigAutoField(auto_created=True,primary_key=True)
     nombre = models.CharField(max_length=45,null=False,default='')
 
+    def __str__(self):
+        return self.nombre
+
 class Alumno(models.Model):
     id = models.ForeignKey(User,primary_key=True,on_delete=models.CASCADE)
     curso = models.ForeignKey(Curso,on_delete=models.CASCADE)
-    promedio = models.FloatField(null=False,default='')
+    promedio = models.FloatField(null=False,default=7.0)
 
 class Asignatura(models.Model):
     id = models.BigAutoField(auto_created=True,primary_key=True)
@@ -48,7 +55,7 @@ class Calificacion(models.Model):
     alumno = models.ForeignKey(Alumno,on_delete=models.CASCADE)
     profesor = models.ForeignKey(Profesor,on_delete=models.CASCADE)
     asignatura = models.ForeignKey(Asignatura,on_delete=models.CASCADE)
-    fecha = models.DateField(null=False,default='')
+    fecha = models.DateTimeField(null=False,default='')
     nota = models.FloatField(null=False,default='')
 
 
