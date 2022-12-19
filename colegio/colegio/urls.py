@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from app import views
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),    
     path("panelAlumno/<int:id>",views.panelAlumno,name="panelAlumno"),
@@ -27,11 +28,23 @@ urlpatterns = [
     path("editarAsignatura/<int:id>",views.editarAsignatura,name='editarAsignatura'),
     path("borrarAsignatura/<int:id>",views.borrarAsignatura,name='borrarAsignatura'),
     path("panelRegistroAlumno/",views.panelRegistroAlumno,name='panelRegistroAlumno'),
-    path('panelAdministrador/', views.panelAdministrador),
-    path("panelInstitucion/",views.panelInstitucion,name='panelInstitucion'),
-    path("panelDireccion/",views.panelDireccion,name='panelDireccion'),
-    path("eliminarDireccion/<int:id>",views.eliminarDireccion,name='eliminarDireccion'),
-    path("editarDireccion/<int:id>",views.editarDireccion,name='editarDireccion'),
+    path('panelAdministrador/', views.panelAdministrador),    
     path("profesores/",views.listaProfesor.as_view()),
     path("profesores/<int:pk>",views.listaProfesor.as_view()),
+    #USER
+    path("panelUser/",views.panelUser,name='panelUser'),
+    path("user/", views.UserView.as_view()),
+    path("user/<int:pk>", views.UserDetail.as_view()),
+    #INSTITUCION
+    path("panelInstitucion/",views.panelInstitucion,name='panelInstitucion'),
+    path("institucion/", views.InstitucionView.as_view()),
+    path("institucion/<int:pk>", views.InstitucionDetail.as_view()),
+    #DIRECCION
+    path("panelDireccion/",views.panelDireccion,name='panelDireccion'),
+    path("direccion/", views.DireccionView.as_view()),
+    path("direccion/<int:pk>", views.DireccionDetail.as_view()),
+    #path("panelInstitucion/",views.panelInstitucion,name='panelInstitucion'),
+    #path("eliminarDireccion/<int:id>",views.eliminarDireccion,name='eliminarDireccion'),
+    #path("editarDireccion/<int:id>",views.editarDireccion,name='editarDireccion'),
+    
 ]
