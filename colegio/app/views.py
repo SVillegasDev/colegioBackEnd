@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from app.models import *
 from app import forms
 from .serializers import ProfesorSerializer
@@ -96,6 +96,8 @@ def borrarCurso(**id):
     curso.delete()
     return redirect('../panelCurso')
 
+
+
 def panelAsignatura(request):
     formAsignatura = forms.AsignaturaForm()
     asignaturas = Asignatura.objects.all()
@@ -118,6 +120,59 @@ def borrarAsignatura(**kwargs):
     asignatura.delete()
     return redirect('../panelAsignatura')
 
+
+def panelInstitucion(request):
+    formInstitucion = forms.InstitucionForm()
+    instituciones = Institucion.objects.all()
+    if request.method == 'POST':
+        nombre = request.POST['nombre']
+        nombre = ((nombre).upper()).strip()
+        institucion = Institucion()
+        if( len(nombre) > 0 ):
+            institucion.nombre = nombre
+            institucion.save()
+            return redirect(to=panelInstitucion)
+    datos = {'form':formInstitucion,'instituciones':instituciones}
+    return render(request,'institucion/panelInstitucion.html',datos)
+
+def panelDireccion(request):
+    formDireccion = forms.DireccionForm()
+    direcciones = Direccion.objects.all()
+    if request.method == 'POST':
+        formDireccion = forms.DireccionForm(request.POST)
+        if formDireccion.is_valid():
+            ciudad = formDireccion['ciudad'].value()
+            calle = formDireccion['calle'].value()
+            numero = formDireccion['numero'].value()
+            direccion = Direccion()
+            direccion.ciudad = ciudad
+            direccion.calle = calle
+            direccion.numero = numero
+            direccion.save()
+            return redirect(to=panelDireccion)
+    datos = {'form':formDireccion, 'direcciones':direcciones}
+    return render(request,'direccion/panelDireccion.html',datos)
+
+
+def editarDireccion(request,id):
+    direccion = get_object_or_404(Direccion, id=id)
+    data = {
+        'form': forms.DireccionForm(instance=direccion)
+    }
+    if request.method == 'POST':
+        formulario = forms.DireccionForm(data=request.POST, instance=direccion, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(to=panelDireccion)
+        else:
+            data["form"] = formulario
+    return render(request, 'direccion/panelDireccion.html', data)
+
+def eliminarDireccion(request, id):
+    direccion = get_object_or_404(Direccion, id = id)
+    direccion.delete()
+    return redirect(to='/panelDireccion')
+  
 
 def panelAdministrador(request):
     return render(request, 'panelAdministrador.html')
@@ -150,7 +205,7 @@ class DetalleProfesor(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def delete(self, request, pk):
-    profesor = self.get_object(pk)
-    profesor.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, pk):
+        profesor = self.get_object(pk)
+        profesor.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

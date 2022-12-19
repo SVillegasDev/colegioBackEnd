@@ -42,3 +42,11 @@ class AlumnoForm(forms.Form):
     curso = forms.ModelMultipleChoiceField(queryset=models.Curso.objects.all())
     password = forms.CharField(max_length=45,label='Contraseña',required=True)
 
+class InstitucionForm(forms.Form):
+    nombre = forms.CharField(max_length=45,required=True)
+
+class DireccionForm(forms.Form):
+    ciudad = forms.CharField(max_length=45,required=True)
+    calle = forms.CharField(max_length=45,required=True)
+    numero = forms.IntegerField(required=False)
+
