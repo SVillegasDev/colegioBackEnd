@@ -19,8 +19,6 @@
                 <tr>
                     <td>Id</td>
                     <td>Nombre</td>
-                    <td>Editar</td>
-                    <td>Borrar</td>
                 </tr>
             </thead>
             <tbody>
@@ -29,8 +27,6 @@
                         <tr>
                             <td>{{i.id}}</td>
                             <td>{{i.nombre}}</td>
-                            <td><a href="/editarCurso/{{i.id}}"><button class="btn btn-warning">Editar</button></a></td>
-                            <td><a href="/borrarCurso/{{i.id}}"><button class="btn btn-danger">Borrar</button></a></td>
                         </tr>
                     {% endfor %}
                 {% else %}
