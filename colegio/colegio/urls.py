@@ -34,9 +34,6 @@ urlpatterns = [
     path('alumno/',views.AlumnoView.as_view(),name='alumno'),
     path("curso/", views.CursoView.as_view()),
     path("curso/<int:pk>", views.CursoDetail.as_view()),
-    #PROFESOR
-    path('profesor/',views.ProfesorView.as_view()),
-    path('profesor/<int:pk>',views.ProfesorDetail.as_view()),
     #ALUMNO
     path('alumno/',views.AlumnoView.as_view()),
     path('alumno/<int:pk>',views.AlumnoDetail.as_view()),
@@ -57,4 +54,5 @@ urlpatterns = [
     path('institucion/<int:pk>',views.InstitucionDetail.as_view()),
     #CALIFICACION
     path('calificacion/',views.CalificacionView.as_view()),
+    path('panelCalificacion/',views.panelCalificacion,name='panelCalificacion'),
 ]

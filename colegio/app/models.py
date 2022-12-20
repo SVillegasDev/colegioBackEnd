@@ -29,6 +29,10 @@ class User(models.Model):
     estado = models.BooleanField(null=False,default=True)
     institucion = models.ForeignKey(Institucion,on_delete=models.CASCADE,null=False,default='')
 
+    def __str__(self):
+        nombre = self.nombre +" "+ self.apellidoPaterno +" "+ self.apellidoMaterno
+        return nombre
+
 class Profesor(models.Model):
     id = models.ForeignKey(User,primary_key=True,on_delete=models.CASCADE,null=False,default='')
     titulo = models.CharField(max_length=45,null=True,default='')

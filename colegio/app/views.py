@@ -257,6 +257,12 @@ class DireccionDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generi
         return self.destroy(request, pk) 
 
 #CALIFICACION
+
+def panelCalificacion(request):
+    calificaciones = Calificacion.objects.all()
+    datos = {'calificacion':calificaciones}
+    return render(request,'calificacion/panelCalificacion.html',datos)
+    
 class CalificacionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     
     queryset = Calificacion.objects.all()
