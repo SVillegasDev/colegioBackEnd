@@ -19,7 +19,8 @@ from app import views
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),    
+    path("admin/", admin.site.urls),   
+    path("",views.index, name='index'),
     #CURSO
     path("panelCurso/",views.panelCurso,name='panelCurso'),    
     path("curso/", views.CursoView.as_view()),
