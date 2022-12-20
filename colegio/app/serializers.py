@@ -1,4 +1,5 @@
-from rest_framework import serializers  
+from rest_framework import serializers
+from datetime import datetime  
 from app.models import *
 
 class DireccionSerializer(serializers.ModelSerializer):
@@ -8,28 +9,40 @@ class DireccionSerializer(serializers.ModelSerializer):
 
 class InstitucionSerializer(serializers.ModelSerializer):
 
-    direccion = DireccionSerializer(read_only=False,many=False)
+    direccion = DireccionSerializer()
 
     class Meta:
         model = Institucion
         fields = '__all__'
 
-class UserSerializer(serializers.ModelSerializer):
+    def create(self,validated_data):
+        direccion_data = validated_data.pop('direccion')
+        direcion = Direccion.objects.create(**direccion_data)
+        institucion = Institucion.objects.create(direccion=direcion,**validated_data)
+        return institucion
 
-    direccion = DireccionSerializer(read_only=False,many=False)
-    institucion = InstitucionSerializer(read_only=False,many=False)
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = '__all__'
+    direccion = DireccionSerializer()
 
 class ProfesorSerializer(serializers.ModelSerializer):
 
-    id = UserSerializer(read_only=False,many=False)
+    id = UserSerializer()
 
     class Meta:
         model = Profesor
         fields = '__all__'
+    
+    def create(self, validated_data):
+        user = validated_data.pop('id')
+        datos = user.pop('direccion')
+        direccion = Direccion.objects.create(**datos)
+        user = User.objects.create(direccion=direccion,**user)
+        profesor = Profesor.objects.create(id=user,**validated_data)
+        return profesor
 
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,12 +51,20 @@ class CursoSerializer(serializers.ModelSerializer):
 
 class AlumnoSerializer(serializers.ModelSerializer):
 
-    id = UserSerializer(read_only=False,many=False)
-    curso = CursoSerializer(read_only=False,many=False)
+    id = UserSerializer()
+    
 
     class Meta:
         model = Alumno
         fields = '__all__'
+    
+    def create(self, validated_data):
+        user = validated_data.pop('id')
+        datos = user.pop('direccion')
+        direccion = Direccion.objects.create(**datos)
+        user = User.objects.create(direccion=direccion,**user)
+        alumno = Alumno.objects.create(id=user,**validated_data)
+        return alumno
 
 class AsignaturaSerializer(serializers.ModelSerializer):
 
@@ -57,6 +78,20 @@ class CalificacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Calificacion
         fields = '__all__'    
+
+    def create(self, validated_data):
+        validated_data['fecha'] = datetime.strftime(validated_data['fecha'],'%Y-%m-%d')
+        validarNota = lambda n: True if (int(n) >= 0 and int(n) <=7) else False
+        calificacion = Calificacion.objects.create(**validated_data)
+        if(validarNota(validated_data['nota'])):
+            return calificacion
+
+
+
+
+
+
+
 
 
 

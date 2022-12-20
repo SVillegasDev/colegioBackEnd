@@ -9,73 +9,24 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Formulario registro Calificacion</h1>
-        <form action="" method="POST">
-            {% csrf_token %}
-            <label for="">Curso</label>
-            {{forms.curso}}
-            <label for="">Alumno</label>
-            {{forms.alumnos}}
-            <label>Asignatura</label>
-            {{forms.asignatura}}
-            <label for="">Profesor</label>
-            {{forms.profesor}}
-            <label for="">Nota</label>
-            {{forms.nota}}
-        </form>
-    </div>
-    <script>
-        $(function(){
-            $('select[name="curso"]').on('change',function(){
-                var id = $(this).val()
-                var select_alumnos = $('select[name="alumnos"]');
-                var option = '<option value="">----------</option>';
-                $.ajax({
-                    url: window.location.pathname,
-                    type: 'POST',
-                    data: {
-                        'action':'cursoAlumnos',
-                        'id':id
-                    },
-                    dataType: 'json',
-
-                }).done(function (data){
-                    if(!data.hasOwnProperty('error')){
-                        $.each(data,function(key,value){
-                            option += '<option value="'+value.id+'">'+value.nombre+'</option>' ;  
-                        })
-                        return false;
-                    }
-                    message_error(data.error);
-                }).fail(function(jqXHR,textStatus,errorThrown){
-                    alert("error\n---> "+textStatus+' : '+errorThrown);
-                }).always(function(data){
-                    select_alumnos.html(option);
-                })
-            });
-        });
-    </script>
+    
     <div class="container d-flex d-flex justify-content-center vh-100">
         <h1>Lista Calificacion</h1>
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <td>Id</td>
                     <td>Alumno</td>
-                    <td>Curso</td>
                     <td>Asignatura</td>
                     <td>Nota</td>
                 </tr>
             </thead>
             <tbody>
-                {% if asignaturas %}
-                    {% for i in asignaturas %}
+                {% if calificacion %}
+                    {% for i in calificacion %}
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td><a href=""><button class="btn btn-warning">Editar</button></a></td>
-                            <td><a href=""><button class="btn btn-danger">Borrar</button></a></td>
+                            <td>{{i.alumno.id}}</td>
+                            <td>{{i.asignatura.nombre}}</td>
+                            <td>{{i.nota}}</td>
                         </tr>
                     {% endfor %}
                 {% else %}

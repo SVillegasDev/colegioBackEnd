@@ -45,5 +45,6 @@ urlpatterns = [
     path('institucion/',views.InstitucionView.as_view(), name='institucion'),
     path('institucion/<int:pk>',views.InstitucionDetail.as_view()),
     #CALIFICACION
-    path('calificacion/',views.CalificacionView.as_view())
+    path('calificacion/',views.CalificacionView.as_view()),
+    path('panelCalificacion/',views.panelCalificacion,name='panelCalificacion'),
 ]

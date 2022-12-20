@@ -29,6 +29,10 @@ class User(models.Model):
     estado = models.BooleanField(null=False,default=True)
     institucion = models.ForeignKey(Institucion,on_delete=models.CASCADE,null=False,default='')
 
+    def __str__(self):
+        nombre = self.nombre +" "+ self.apellidoPaterno +" "+ self.apellidoMaterno
+        return nombre
+
 class Profesor(models.Model):
     id = models.ForeignKey(User,primary_key=True,on_delete=models.CASCADE,null=False,default='')
     titulo = models.CharField(max_length=45,null=True,default='')
@@ -60,7 +64,8 @@ class Calificacion(models.Model):
     alumno = models.ForeignKey(Alumno,on_delete=models.CASCADE)
     profesor = models.ForeignKey(Profesor,on_delete=models.CASCADE)
     asignatura = models.ForeignKey(Asignatura,on_delete=models.CASCADE)
-    fecha = models.DateTimeField(null=False,default='')
+    fecha = models.DateField(null=False,default='')
     nota = models.FloatField(null=False,default='')
 
-
+    
+    

@@ -4,10 +4,11 @@ from app import forms
 from .serializers import *
 from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework.views import APIView
-from rest_framework import status, mixins, generics
+from rest_framework.decorators import api_view
+from rest_framework import status, mixins, generics, filters
 from django.http import Http404
 from datetime import datetime
+from django_filters.rest_framework import DjangoFilterBackend 
 
 formatosFecha = ['%d/%m/%Y %H:%M:%S','%d/%m/%Y %H:%M','%d/%m/%Y','%d/%m/%y %H:%M:%S','%d/%m/%y %H:%M','%d/%m/%y','%d-%m-%Y %H:%M:%S','%d-%m-%Y %H:%M','%d-%m-%Y','%d-%m-%y %H:%M:%S','%d-%m-%y %H:%M','%d-%m-%y']
 
@@ -177,6 +178,14 @@ class ProfesorView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gene
     def post(self, request):
         return self.create(request)
 
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['puntuacion']
+    ordering_fields = ['puntuacion']
+
+    filterset_fields = {
+    'puntuacion': ['lte', 'gte']   
+}
+
 class ProfesorDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
 
     queryset = Profesor.objects.all()
@@ -257,6 +266,12 @@ class DireccionDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generi
         return self.destroy(request, pk) 
 
 #CALIFICACION
+
+def panelCalificacion(request):
+    calificaciones = Calificacion.objects.all()
+    datos = {'calificacion':calificaciones}
+    return render(request,'calificacion/panelCalificacion.html',datos)
+    
 class CalificacionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     
     queryset = Calificacion.objects.all()
@@ -281,7 +296,6 @@ class CalificacionDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, ge
     
     def delete(self,request,pk):
         return self.destroy(request,pk)
-
 
 """
 
