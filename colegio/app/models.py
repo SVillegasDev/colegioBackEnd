@@ -60,7 +60,8 @@ class Calificacion(models.Model):
     alumno = models.ForeignKey(Alumno,on_delete=models.CASCADE)
     profesor = models.ForeignKey(Profesor,on_delete=models.CASCADE)
     asignatura = models.ForeignKey(Asignatura,on_delete=models.CASCADE)
-    fecha = models.DateTimeField(null=False,default='')
+    fecha = models.DateField(null=False,default='')
     nota = models.FloatField(null=False,default='')
 
-
+    
+    

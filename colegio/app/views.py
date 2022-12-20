@@ -4,7 +4,7 @@ from app import forms
 from .serializers import *
 from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework import status, mixins, generics
 from django.http import Http404
 from datetime import datetime
@@ -281,7 +281,6 @@ class CalificacionDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, ge
     
     def delete(self,request,pk):
         return self.destroy(request,pk)
-
 
 """
 
