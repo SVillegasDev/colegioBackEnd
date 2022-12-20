@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Direccion(models.Model):
-    id = models.BigAutoField(auto_created=True,primary_key=True)
     ciudad = models.CharField(max_length=45,null=False,default='')
     calle = models.CharField(max_length=45,null=False)
     numero = models.IntegerField(null=True)
@@ -13,7 +12,6 @@ class Direccion(models.Model):
         return self.ciudad + ", " + self.calle 
 
 class Institucion(models.Model):
-    id = models.BigAutoField(auto_created=True,primary_key=True)
     nombre = models.CharField(max_length=45,null=False,default='')
     direccion = models.ForeignKey(Direccion,on_delete=models.CASCADE,null=False)
 
@@ -21,7 +19,6 @@ class Institucion(models.Model):
         return self.nombre
 
 class User(models.Model):
-    id = models.BigAutoField(auto_created=True,primary_key=True)
     username = models.CharField(max_length=45,null=False,default='')
     password = models.CharField(max_length=45,null=False,default='')
     nombre = models.CharField(max_length=45,null=False,default='')
@@ -38,23 +35,28 @@ class Profesor(models.Model):
     puntuacion = models.CharField(max_length=45,null=True,default='')
 
 class Curso(models.Model):
-    id = models.BigAutoField(auto_created=True,primary_key=True)
     nombre = models.CharField(max_length=45,null=False,default='')
 
     def __str__(self):
         return self.nombre
 
 class Alumno(models.Model):
-    id = models.ForeignKey(User,primary_key=True,on_delete=models.CASCADE)
+    
+    id = models.ForeignKey(User,primary_key=True,on_delete=models.CASCADE,null=False,default='')
     curso = models.ForeignKey(Curso,on_delete=models.CASCADE)
     promedio = models.FloatField(null=False,default=7.0)
 
+    def __str__(self):
+        nombre = self.id.nombre +" "+ self.id.apellidoPaterno +" "+ self.id.apellidoMaterno
+        return nombre
+
 class Asignatura(models.Model):
-    id = models.BigAutoField(auto_created=True,primary_key=True)
     nombre = models.CharField(max_length=45,null=False)
+    
+    def __str__(self):
+        return self.nombre
 
 class Calificacion(models.Model):
-    id = models.BigAutoField(auto_created=True,primary_key=True)
     alumno = models.ForeignKey(Alumno,on_delete=models.CASCADE)
     profesor = models.ForeignKey(Profesor,on_delete=models.CASCADE)
     asignatura = models.ForeignKey(Asignatura,on_delete=models.CASCADE)

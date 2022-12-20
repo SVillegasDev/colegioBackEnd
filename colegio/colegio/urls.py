@@ -23,43 +23,27 @@ urlpatterns = [
     path("",views.index, name='index'),
     #CURSO
     path("panelCurso/",views.panelCurso,name='panelCurso'),    
-    path("curso/", views.CursoView.as_view()),
-    path("curso/<int:pk>", views.CursoDetail.as_view()),      
-    #ASIGNATURA
-    path("panelAsignatura/",views.panelAsignatura,name='panelAsignatura'),
-    path("asignatura/", views.AsignaturaView.as_view()),
-    path("asignatura/<int:pk>", views.AsignaturaDetail.as_view()),  
-    #USER
-    path("panelUser/",views.panelUser,name='panelUser'),
-    path("user/", views.UserView.as_view()),
-    path("user/<int:pk>", views.UserDetail.as_view()),
+    path("curso/", views.CursoView.as_view(),name='curso'),
+    path("curso/<int:pk>", views.CursoDetail.as_view()),
     #PROFESOR
-    path("panelProfesor/",views.panelProfesor,name='panelProfesor'),
-    path("profesor/", views.ProfesorView.as_view()),
-    path("profesor/<int:pk>", views.ProfesorDetail.as_view()),
-     #ALUMNO
-    path("panelAlumno/",views.panelAlumno,name='panelAlumno'),
-    path("alumno/", views.AlumnoView.as_view()),
-    path("alumno/<int:pk>", views.AlumnoDetail.as_view()),
-    #INSTITUCION
-    path("panelInstitucion/",views.panelInstitucion,name='panelInstitucion'),
-    path("institucion/", views.InstitucionView.as_view()),
-    path("institucion/<int:pk>", views.InstitucionDetail.as_view()),
+    path("panelProfesor/",views.panelProfesor,name='panelProfesor'), 
+    path('profesor/',views.ProfesorView.as_view(),name='profesor'),
+    path('profesor/<int:pk>',views.ProfesorDetail.as_view()),
+    #ALUMNO
+    path("panelAlumno/",views.panelAlumno,name='panelAlumno'), 
+    path('alumno/',views.AlumnoView.as_view(),name='alumno'),
+    path('alumno/<int:pk>',views.AlumnoDetail.as_view()),
     #DIRECCION
-    path("panelDireccion/",views.panelDireccion,name='panelDireccion'),
-    path("direccion/", views.DireccionView.as_view()),
-    path("direccion/<int:pk>", views.DireccionDetail.as_view()),
-    
-    #path("panelRegistroAlumno/",views.panelRegistroAlumno,name='panelRegistroAlumno'),
-    #path("editarAsignatura/<int:id>",views.editarAsignatura,name='editarAsignatura'),
-    #path("borrarAsignatura/<int:id>",views.borrarAsignatura,name='borrarAsignatura'),
-    #path("editarCurso/<int:id>",views.editarCurso,name='editarCurso'),
-    #path("borrarCurso/<int:id>",views.borrarCurso,name='borrarCurso'),
-    #path("panelAlumno/<int:id>",views.panelAlumno,name="panelAlumno"),
-    #path("profesores/",views.listaProfesor.as_view()),
-    #path("profesores/<int:pk>",views.listaProfesor.as_view()),
-    #path("panelInstitucion/",views.panelInstitucion,name='panelInstitucion'),
-    #path("eliminarDireccion/<int:id>",views.eliminarDireccion,name='eliminarDireccion'),
-    #path("editarDireccion/<int:id>",views.editarDireccion,name='editarDireccion'),
-    
+    path('direccion/',views.DireccionView.as_view()),
+    path('direccion/<int:pk>',views.DireccionDetail.as_view()),
+    #ASIGNATURA
+    path("panelAsignatura/",views.panelAsignatura,name='panelAsignatura'), 
+    path('asignatura/',views.AsignaturaView.as_view(),name='asignatura'),
+    path('asignatura/<int:pk>',views.AsignaturaDetail.as_view()),
+    #INSTITUCION
+    path("panelInstitucion/",views.panelInstitucion,name='panelInstitucion'), 
+    path('institucion/',views.InstitucionView.as_view(), name='institucion'),
+    path('institucion/<int:pk>',views.InstitucionDetail.as_view()),
+    #CALIFICACION
+    path('calificacion/',views.CalificacionView.as_view())
 ]

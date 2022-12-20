@@ -1,0 +1,90 @@
+{% include 'alumno/header.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulario registro Calificacion</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="">Curso</label>
+            {{forms.curso}}
+            <label for="">Alumno</label>
+            {{forms.alumnos}}
+            <label>Asignatura</label>
+            {{forms.asignatura}}
+            <label for="">Profesor</label>
+            {{forms.profesor}}
+            <label for="">Nota</label>
+            {{forms.nota}}
+        </form>
+    </div>
+    <script>
+        $(function(){
+            $('select[name="curso"]').on('change',function(){
+                var id = $(this).val()
+                var select_alumnos = $('select[name="alumnos"]');
+                var option = '<option value="">----------</option>';
+                $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action':'cursoAlumnos',
+                        'id':id
+                    },
+                    dataType: 'json',
+
+                }).done(function (data){
+                    if(!data.hasOwnProperty('error')){
+                        $.each(data,function(key,value){
+                            option += '<option value="'+value.id+'">'+value.nombre+'</option>' ;  
+                        })
+                        return false;
+                    }
+                    message_error(data.error);
+                }).fail(function(jqXHR,textStatus,errorThrown){
+                    alert("error\n---> "+textStatus+' : '+errorThrown);
+                }).always(function(data){
+                    select_alumnos.html(option);
+                })
+            });
+        });
+    </script>
+    <div class="container d-flex d-flex justify-content-center vh-100">
+        <h1>Lista Calificacion</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Alumno</td>
+                    <td>Curso</td>
+                    <td>Asignatura</td>
+                    <td>Nota</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% if asignaturas %}
+                    {% for i in asignaturas %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><a href=""><button class="btn btn-warning">Editar</button></a></td>
+                            <td><a href=""><button class="btn btn-danger">Borrar</button></a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>No hay Asignaturas registradas</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

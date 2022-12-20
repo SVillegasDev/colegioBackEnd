@@ -3,6 +3,7 @@ from app.models import *
 from app import forms
 from .serializers import *
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework import status, mixins, generics
 from django.http import Http404
@@ -71,7 +72,7 @@ def panelAsignatura(request):
 class AsignaturaView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
 
     queryset = Asignatura.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = AsignaturaSerializer
 
     def get(self, request):
         return self.list(request)
@@ -82,7 +83,7 @@ class AsignaturaView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Ge
 class AsignaturaDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
 
     queryset = Asignatura.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = AsignaturaSerializer
 
     def get(self, request, pk):
         return self.retrieve(request, pk)
@@ -255,6 +256,33 @@ class DireccionDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generi
     def delete(self, request, pk):
         return self.destroy(request, pk) 
 
+#CALIFICACION
+class CalificacionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    
+    queryset = Calificacion.objects.all()
+    serializer_class = CalificacionSerializer
+
+    def get(self,request):
+        return self.list(request)
+    
+    def post(self,request):
+        return self.create(request)
+
+class CalificacionDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = Calificacion.objects.all()
+    serializer_class = CalificacionSerializer
+
+    def get(self,request,pk):
+        return self.retrieve(request,pk)
+    
+    def put(self,request,pk):
+        return self.update(request,pk)
+    
+    def delete(self,request,pk):
+        return self.destroy(request,pk)
+
+
 """
 
 def panelCurso(request):
@@ -303,16 +331,16 @@ def borrarAsignatura(**kwargs):
     return redirect('../panelAsignatura')
 
 def panelAlumno(request,id):
-    alumno = forms.AlumnoForm()
+    alumno = AlumnoForm()
     datos = {'form':alumno}
     return render(request,'panelAlumno.html',datos)
 
 
 def panelRegistroAlumno(request):
-    formAlumno = forms.AlumnoForm()
+    formAlumno = AlumnoForm()
     alumnos = Alumno.objects.all()
     if request.method == 'POST':
-        formAlumno = forms.AlumnoForm(request.POST)
+        formAlumno = AlumnoForm(request.POST)
         if formAlumno.is_valid():
             nombre = formAlumno['nombre'].value()
             apellidoPaterno = formAlumno['apellidoPaterno'].value()
@@ -335,6 +363,7 @@ def panelRegistroAlumno(request):
             direccion.save()
             direcciones = Direccion.objects.all()
             direccion = direcciones[len(direcciones)-1]
+
             usuario = User()
             usuario.username = nombre.strip()[0] + apellidoPaterno.strip() + fecha[3:5]
             usuario.password = password
@@ -345,6 +374,7 @@ def panelRegistroAlumno(request):
             usuario.nacimiento = nacimiento
             usuario.institucion = institucion
             usuario.save()
+
             usuarios = User.objects.all()
             usuario = usuarios[len(usuarios) -1]
             alumno = Alumno()
@@ -352,8 +382,59 @@ def panelRegistroAlumno(request):
             alumno.curso = curso
             alumno.save()
             print("Usuario almacenado correctamente")
+
     datos = {'forms':formAlumno,'alumnos':alumnos}
     return render(request,'alumno/panelRegistroAlumno.html',datos)
+
+def panelCurso(request):
+    formCurso = forms.CursoForm()
+    cursos = Curso.objects.all()
+    if request.method == 'POST':
+        nombre = request.POST['nombre']
+        nombre = ((nombre).upper()).strip()
+        curso = Curso()
+        if( len(nombre) > 0 ):
+            curso.nombre = nombre
+            respuesta = curso.save()
+            curso = Curso.objects.all()
+    datos = {'form':formCurso,'cursos':cursos}
+    return render(request,'curso/panelCurso.html',datos)
+
+def editarCurso(**id):
+    curso = Curso.objects.get(id=id)
+    print(curso.nombre)
+
+def borrarCurso(**id):
+    curso = Curso.objects.get(id=id)
+    curso.delete()
+    return redirect('../panelCurso')
+
+def panelAsignatura(request):
+    formAsignatura = forms.AsignaturaForm()
+    asignaturas = Asignatura.objects.all()
+    if request.method == 'POST':
+        nombre = request.POST['nombre']
+        nombre = ((nombre).upper()).strip()
+        asignatura = Asignatura()
+        if( len(nombre) > 0 ):
+            asignatura.nombre = nombre
+            asignatura.save()
+    datos = {'form':formAsignatura,'asignaturas':asignaturas}
+    return render(request,'asignatura/panelAsignatura.html',datos)
+
+def editarAsignatura(**kwargs):
+    asignatura = Asignatura.objects.get(id=kwargs['id'])
+    print(asignatura.nombre)
+
+def borrarAsignatura(**kwargs):
+    asignatura = Asignatura.objects.get(id=kwargs['id'])
+    asignatura.delete()
+    return redirect('../panelAsignatura')
+
+
+def panelAdministrador(request):
+    return render(request, 'panelAdministrador.html')
+
 
 class listaProfesor(APIView):
     def get(self, request):

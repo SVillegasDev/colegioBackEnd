@@ -38,10 +38,30 @@ class AlumnoForm(forms.Form):
     calle = forms.CharField(max_length=45,label='Calle',required=True)
     numero = forms.CharField(max_length=45,label='Numero',required=False)
 
-    institucion = forms.ModelMultipleChoiceField(queryset=models.Institucion.objects.all())
-    curso = forms.ModelMultipleChoiceField(queryset=models.Curso.objects.all())
+    institucion = forms.ModelChoiceField(queryset=models.Institucion.objects.all(),widget=forms.Select(attrs={
+        'class':'form-control'
+    }))
+    curso = forms.ModelChoiceField(queryset=models.Curso.objects.all(),widget=forms.Select(attrs={
+        'class':'form-control'
+    }))
     password = forms.CharField(max_length=45,label='Contraseña',required=True)
 
+class CalificacionForm(forms.Form):
+
+    curso = forms.ModelChoiceField(queryset=models.Curso.objects.all(),required=True,widget=forms.Select(attrs={
+        'class':'form-control'
+    }))
+    alumnos = forms.ModelChoiceField(queryset=models.Alumno.objects.none(),required=True,widget=forms.Select(attrs={
+        'class':'form-control'
+    }))
+    asignatura = forms.ModelChoiceField(queryset=models.Asignatura.objects.all(),required=True,widget=forms.Select(attrs={
+        'class':'form-control'
+    }))
+    profesor = forms.ModelChoiceField(queryset=models.Profesor.objects.all(),required=False,widget=forms.Select(attrs={
+        'class':'form-control'
+    }))
+    nota = forms.FloatField(max_value=7.0,min_value=1.0,required=True)
+    
 class InstitucionForm(forms.Form):
     nombre = forms.CharField(max_length=45,required=True)
 
