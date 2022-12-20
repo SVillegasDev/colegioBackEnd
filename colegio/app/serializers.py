@@ -20,6 +20,19 @@ class InstitucionSerializer(serializers.ModelSerializer):
         direcion = Direccion.objects.create(**direccion_data)
         institucion = Institucion.objects.create(direccion=direcion,**validated_data)
         return institucion
+    
+    def update(self,instance,validated_data):
+        institucion_data = validated_data.pop('direccion')
+        institucion = instance.direccion
+
+        instance.direccion.ciudad = institucion_data.get('ciudad',instance.direccion.ciudad)
+        instance.direccion.calle = institucion_data.get('calle',instance.direccion.calle)
+        instance.direccion.numero = institucion_data.get('numero',instance.direccion.numero)
+        instance.save()
+        institucion.save()
+
+        return instance
+        
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -43,6 +56,7 @@ class ProfesorSerializer(serializers.ModelSerializer):
         user = User.objects.create(direccion=direccion,**user)
         profesor = Profesor.objects.create(id=user,**validated_data)
         return profesor
+       
 
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
