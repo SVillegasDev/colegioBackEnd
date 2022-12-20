@@ -183,7 +183,7 @@ class ProfesorView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gene
     ordering_fields = ['puntuacion']
 
     filterset_fields = {
-    'puntuacion': ['lte', 'gte']   
+    'puntuacion': ['gte']   
 }
 
 class ProfesorDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
@@ -282,6 +282,13 @@ class CalificacionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.
     
     def post(self,request):
         return self.create(request)
+    
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['nota']
+    ordering_fields = ['nota']
+
+    filterset_fields = {
+    'nota': ['gte','lte']  }
 
 class CalificacionDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
 

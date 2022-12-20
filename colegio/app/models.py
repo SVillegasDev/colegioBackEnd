@@ -36,7 +36,7 @@ class User(models.Model):
 class Profesor(models.Model):
     id = models.ForeignKey(User,primary_key=True,on_delete=models.CASCADE,null=False,default='')
     titulo = models.CharField(max_length=45,null=True,default='')
-    puntuacion = models.CharField(max_length=45,null=True,default='')
+    puntuacion = models.IntegerField(null=True,default='')
 
 class Curso(models.Model):
     nombre = models.CharField(max_length=45,null=False,default='')
