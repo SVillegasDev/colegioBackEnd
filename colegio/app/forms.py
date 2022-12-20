@@ -61,3 +61,12 @@ class CalificacionForm(forms.Form):
         'class':'form-control'
     }))
     nota = forms.FloatField(max_value=7.0,min_value=1.0,required=True)
+    
+class InstitucionForm(forms.Form):
+    nombre = forms.CharField(max_length=45,required=True)
+
+class DireccionForm(forms.Form):
+    ciudad = forms.CharField(max_length=45,required=True)
+    calle = forms.CharField(max_length=45,required=True)
+    numero = forms.IntegerField(required=False)
+

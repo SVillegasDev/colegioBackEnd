@@ -17,18 +17,28 @@ from django.contrib import admin
 from django.urls import path
 from app import views
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),    
-    path("panelAlumno/<int:id>",views.panelAlumno,name="panelAlumno"),
-    path("panelCurso/",views.panelCurso,name='panelCurso'),
-    path("editarCurso/<int:id>",views.editarCurso,name='editarCurso'),
-    path("borrarCurso/<int:id>",views.borrarCurso,name='borrarCurso'),
-    path("panelAsignatura/",views.panelAsignatura,name='panelAsignatura'),
-    path("editarAsignatura/<int:id>",views.editarAsignatura,name='editarAsignatura'),
-    path("borrarAsignatura/<int:id>",views.borrarAsignatura,name='borrarAsignatura'),
-    path("panelRegistroAlumno/",views.panelRegistroAlumno,name='panelRegistroAlumno'),
-    path("panelCalificacion/",views.panelCalificacion,name='panelCalificacion'),
-    path('panelAdministrador/', views.panelAdministrador),
-    path("profesores/",views.listaProfesor.as_view()),
-    path("profesores/<int:pk>",views.listaProfesor.as_view()),
+    #CURSO
+    path("panelCurso/",views.panelCurso,name='panelCurso'),    
+    path("curso/", views.CursoView.as_view()),
+    path("curso/<int:pk>", views.CursoDetail.as_view()),
+    #PROFESOR
+    path('profesor/',views.ProfesorView.as_view()),
+    path('profesor/<int:pk>',views.ProfesorDetail.as_view()),
+    #ALUMNO
+    path('alumno/',views.AlumnoView.as_view()),
+    path('alumno/<int:pk>',views.AlumnoDetail.as_view()),
+    #DIRECCION
+    path('direccion/',views.DireccionView.as_view()),
+    path('direccion/<int:pk>',views.DireccionDetail.as_view()),
+    #ASIGNATURA
+    path('asignatura/',views.AsignaturaView.as_view()),
+    path('asignatura/<int:pk>',views.AsignaturaDetail.as_view()),
+    #INSTITUCION
+    path('institucion/',views.InstitucionView.as_view()),
+    path('institucion/<int:pk>',views.InstitucionDetail.as_view()),
+    #CALIFICACION
+    path('calificacion/',views.CalificacionView.as_view())
 ]
