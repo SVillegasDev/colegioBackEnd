@@ -23,6 +23,15 @@ urlpatterns = [
     path("",views.index, name='index'),
     #CURSO
     path("panelCurso/",views.panelCurso,name='panelCurso'),    
+    path("curso/", views.CursoView.as_view(),name='curso'),
+    path("curso/<int:pk>", views.CursoDetail.as_view()),
+    #PROFESOR
+    path("panelProfesor/",views.panelProfesor,name='panelProfesor'), 
+    path('profesor/',views.ProfesorView.as_view(),name='profesor'),
+    path('profesor/<int:pk>',views.ProfesorDetail.as_view()),
+    #ALUMNO
+    path("panelAlumno/",views.panelAlumno,name='panelAlumno'), 
+    path('alumno/',views.AlumnoView.as_view(),name='alumno'),
     path("curso/", views.CursoView.as_view()),
     path("curso/<int:pk>", views.CursoDetail.as_view()),
     #PROFESOR
@@ -35,6 +44,12 @@ urlpatterns = [
     path('direccion/',views.DireccionView.as_view()),
     path('direccion/<int:pk>',views.DireccionDetail.as_view()),
     #ASIGNATURA
+    path("panelAsignatura/",views.panelAsignatura,name='panelAsignatura'), 
+    path('asignatura/',views.AsignaturaView.as_view(),name='asignatura'),
+    path('asignatura/<int:pk>',views.AsignaturaDetail.as_view()),
+    #INSTITUCION
+    path("panelInstitucion/",views.panelInstitucion,name='panelInstitucion'), 
+    path('institucion/',views.InstitucionView.as_view(), name='institucion'),
     path('asignatura/',views.AsignaturaView.as_view()),
     path('asignatura/<int:pk>',views.AsignaturaDetail.as_view()),
     #INSTITUCION

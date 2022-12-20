@@ -6,19 +6,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cursos</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Formulario registro curso</h1>
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Guardar">
-        </form>
+    <div class="container my-4">
+        <h1>Listado de cursos</h1>
+        <a href="{% url 'curso' %}" class="btn btn-success my-4">Agregar o modificar</a>
     </div>
     <div class="container d-flex d-flex justify-content-center vh-100">
-        <h1>Lista Cursos</h1>
         <table class="table table-hover">
             <thead>
                 <tr>
