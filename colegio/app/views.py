@@ -21,10 +21,290 @@ def formatFecha(fecha):
     if(newFecha != None):
         return newFecha
     
+
+#CURSO
+
+def panelCurso(request):
+    cursos = Curso.objects.all()
+    data = {"cursos": cursos}
+    return render(request, "curso/panelCurso.html", data)
+
+class CursoView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = Curso.objects.all()
+    serializer_class = CursoSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request) 
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk)   
+
+class CursoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = Curso.objects.all()
+    serializer_class = CursoSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk) 
+    
+
+
+#ASIGNATURA
+
+def panelAsignatura(request):
+    asignaturas = Asignatura.objects.all()
+    data = {"asignaturas": asignaturas}
+    return render(request, "asignatura/panelAsignatura.html", data)
+
+class AsignaturaView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = Asignatura.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)   
+
+class AsignaturaDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = Asignatura.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk) 
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk) 
+        
+
+#USUARIO
+
+def panelUser(request):
+    users = User.objects.all()
+    data = {"users": users}
+    return render(request, "user/panelUser.html", data)
+
+class UserView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)
+
+class UserDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk) 
+
+#ALUMNO
+
+def panelAlumno(request):
+    alumnos = Alumno.objects.all()
+    data = {"alumnos": alumnos}
+    return render(request, "user/panelAlumno.html", data)
+
+class AlumnoView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)
+
+class AlumnoDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk) 
+
+#PROFESOR
+
+def panelProfesor(request):
+    profesores = Profesor.objects.all()
+    data = {"profesores": profesores}
+    return render(request, "user/panelProfesor.html", data)
+
+class ProfesorView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)
+
+class ProfesorDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk) 
+
+
+#INSTITUCION
+
+def panelInstitucion(request):
+    instituciones = Institucion.objects.all()
+    data = {"instituciones": instituciones}
+    return render(request, "institucion/panelInstitucion.html", data)
+
+class InstitucionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = Institucion.objects.all()
+    serializer_class = InstitucionSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)
+
+class InstitucionDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = Institucion.objects.all()
+    serializer_class = InstitucionSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk) 
+
+# DIRECCION
+
+def panelDireccion(request):
+    direcciones = Direccion.objects.all()
+    data = {"direcciones": direcciones}
+    return render(request, "direccion/panelDireccion.html", data)
+
+class DireccionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+
+    queryset = Direccion.objects.all()
+    serializer_class = DireccionSerializer
+
+    def get(self, request):
+        return self.list(request)
+    
+    def post(self, request):
+        return self.create(request)
+
+class DireccionDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView, mixins.DestroyModelMixin):
+
+    queryset = Direccion.objects.all()
+    serializer_class = DireccionSerializer
+
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    def delete(self, request, pk):
+        return self.destroy(request, pk) 
+
+"""
+
+def panelCurso(request):
+    formCurso = forms.CursoForm()
+    cursos = Curso.objects.all()
+    if request.method == 'POST':
+        nombre = request.POST['nombre']
+        nombre = ((nombre).upper()).strip()
+        curso = Curso()
+        if( len(nombre) > 0 ):
+            curso.nombre = nombre
+            respuesta = curso.save()
+            curso = Curso.objects.all()
+    datos = {'form':formCurso,'cursos':cursos}
+    return render(request,'curso/panelCurso.html',datos)
+
+def editarCurso(**id):
+    curso = Curso.objects.get(id=id)
+    print(curso.nombre)
+
+def borrarCurso(**id):
+    curso = Curso.objects.get(id=id)
+    curso.delete()
+    return redirect('../panelCurso')
+
+def panelAsignatura(request):
+    formAsignatura = forms.AsignaturaForm()
+    asignaturas = Asignatura.objects.all()
+    if request.method == 'POST':
+        nombre = request.POST['nombre']
+        nombre = ((nombre).upper()).strip()
+        asignatura = Asignatura()
+        if( len(nombre) > 0 ):
+            asignatura.nombre = nombre
+            asignatura.save()
+    datos = {'form':formAsignatura,'asignaturas':asignaturas}
+    return render(request,'asignatura/panelAsignatura.html',datos)
+
+def editarAsignatura(**kwargs):
+    asignatura = Asignatura.objects.get(id=kwargs['id'])
+    print(asignatura.nombre)
+
+def borrarAsignatura(**kwargs):
+    asignatura = Asignatura.objects.get(id=kwargs['id'])
+    asignatura.delete()
+    return redirect('../panelAsignatura')
+
 def panelAlumno(request,id):
     alumno = forms.AlumnoForm()
     datos = {'form':alumno}
     return render(request,'panelAlumno.html',datos)
+
 
 def panelRegistroAlumno(request):
     formAlumno = forms.AlumnoForm()
@@ -73,61 +353,6 @@ def panelRegistroAlumno(request):
     datos = {'forms':formAlumno,'alumnos':alumnos}
     return render(request,'alumno/panelRegistroAlumno.html',datos)
 
-def panelCurso(request):
-    formCurso = forms.CursoForm()
-    cursos = Curso.objects.all()
-    if request.method == 'POST':
-        nombre = request.POST['nombre']
-        nombre = ((nombre).upper()).strip()
-        curso = Curso()
-        if( len(nombre) > 0 ):
-            curso.nombre = nombre
-            respuesta = curso.save()
-            curso = Curso.objects.all()
-    datos = {'form':formCurso,'cursos':cursos}
-    return render(request,'curso/panelCurso.html',datos)
-
-def editarCurso(**id):
-    curso = Curso.objects.get(id=id)
-    print(curso.nombre)
-
-def borrarCurso(**id):
-    curso = Curso.objects.get(id=id)
-    curso.delete()
-    return redirect('../panelCurso')
-
-
-
-def panelAsignatura(request):
-    formAsignatura = forms.AsignaturaForm()
-    asignaturas = Asignatura.objects.all()
-    if request.method == 'POST':
-        nombre = request.POST['nombre']
-        nombre = ((nombre).upper()).strip()
-        asignatura = Asignatura()
-        if( len(nombre) > 0 ):
-            asignatura.nombre = nombre
-            asignatura.save()
-    datos = {'form':formAsignatura,'asignaturas':asignaturas}
-    return render(request,'asignatura/panelAsignatura.html',datos)
-
-def editarAsignatura(**kwargs):
-    asignatura = Asignatura.objects.get(id=kwargs['id'])
-    print(asignatura.nombre)
-
-def borrarAsignatura(**kwargs):
-    asignatura = Asignatura.objects.get(id=kwargs['id'])
-    asignatura.delete()
-    return redirect('../panelAsignatura')
-
-
-
- 
-
-def panelAdministrador(request):
-    return render(request, 'panelAdministrador.html')
-
-
 class listaProfesor(APIView):
     def get(self, request):
         profesor = Profesor.objects.all()
@@ -160,95 +385,6 @@ class DetalleProfesor(APIView):
         profesor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#INSTITUCION
-
-def panelInstitucion(request):
-    instituciones = Institucion.objects.all()
-    data = {"instituciones": instituciones}
-    return render(request, "institucion/panelInstitucion.html", data)
-
-class InstitucionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-
-    queryset = Institucion.objects.all()
-    serializer_class = InstitucionSerializer
-
-    def get(self, request):
-        return self.list(request)
-    
-    def post(self, request):
-        return self.create(request)
-
-class InstitucionDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
-
-    queryset = Institucion.objects.all()
-    serializer_class = InstitucionSerializer
-
-    def get(self, request, pk):
-        return self.retrieve(request, pk)
-
-    def put(self, request, pk):
-        return self.update(request, pk)
-
-#USUARIO
-
-def panelUser(request):
-    users = User.objects.all()
-    data = {"users": users}
-    return render(request, "user/panelUser.html", data)
-
-class UserView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def get(self, request):
-        return self.list(request)
-    
-    def post(self, request):
-        return self.create(request)
-
-class UserDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def get(self, request, pk):
-        return self.retrieve(request, pk)
-
-    def put(self, request, pk):
-        return self.update(request, pk)
-
-
-# DIRECCION
-
-def panelDireccion(request):
-    direcciones = Direccion.objects.all()
-    data = {"direcciones": direcciones}
-    return render(request, "direccion/panelDireccion.html", data)
-
-class DireccionView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-
-    queryset = Direccion.objects.all()
-    serializer_class = DireccionSerializer
-
-    def get(self, request):
-        return self.list(request)
-    
-    def post(self, request):
-        return self.create(request)
-
-class DireccionDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
-
-    queryset = Direccion.objects.all()
-    serializer_class = DireccionSerializer
-
-    def get(self, request, pk):
-        return self.retrieve(request, pk)
-
-    def put(self, request, pk):
-        return self.update(request, pk)
-
-"""
 
 #INSTITUCION
 def panelInstitucion(request):

@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asignaturas</title>
+    <title>Alumnos</title>
 </head>
 <body>
     <div class="container">
-        <h1>Formulario registro Asignatura</h1>
+        <h1>Formulario registro de institucion</h1>
         <form action="" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
@@ -18,29 +18,31 @@
         </form>
     </div>
     <div class="container d-flex d-flex justify-content-center vh-100">
-        <h1>Lista Asignaturas</h1>
+        <h1>Lista de Profesores</h1>
         <table class="table table-hover">
             <thead>
                 <tr>
                     <td>Id</td>
-                    <td>Nombre</td>
+                    <td>Curso</td>
+                    <td>Promedio</td>
                     <td>Editar</td>
                     <td>Borrar</td>
                 </tr>
             </thead>
             <tbody>
-                {% if asignaturas %}
-                    {% for i in asignaturas %}
+                {% if alumnos %}
+                    {% for a in alumnos %}
                         <tr>
-                            <td>{{i.id}}</td>
-                            <td>{{i.nombre}}</td>
-                            <td><a href="/editarAsignatura/{{i.id}}"><button class="btn btn-warning">Editar</button></a></td>
-                            <td><a href="/borrarAsignatura/{{i.id}}"><button class="btn btn-danger">Borrar</button></a></td>
+                            <td>{{a.id}}</td>
+                            <td>{{a.curso}}</td>
+                            <td>{{a.promedio}}</td>
+                            <td><a href="/editarDireccion/{{i.id}}"><button class="btn btn-warning">Editar</button></a></td>
+                            <td><a href="/eliminarDireccion/{{i.id}}"><button class="btn btn-danger">Borrar</button></a></td>
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td>No hay Asignaturas registradas</td>
+                        <td>No hay alumnos registradas</td>
                     </tr>
                 {% endif %}
             </tbody>

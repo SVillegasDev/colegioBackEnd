@@ -6,6 +6,11 @@ class ProfesorSerializer(serializers.ModelSerializer):
         model = Profesor
         fields = '__all__'
 
+class AlumnoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Alumno
+        fields = '__all__'
+
 class DireccionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Direccion
@@ -20,6 +25,18 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+class AsignaturaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asignatura
+        fields = '__all__'
+
+class CursoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Curso
+        fields = '__all__'
+
+
 
 
 

@@ -9,6 +9,9 @@ class Direccion(models.Model):
     calle = models.CharField(max_length=45,null=False)
     numero = models.IntegerField(null=True)
 
+    def __str__(self):
+        return self.ciudad + ", " + self.calle 
+
 class Institucion(models.Model):
     id = models.BigAutoField(auto_created=True,primary_key=True)
     nombre = models.CharField(max_length=45,null=False,default='')
