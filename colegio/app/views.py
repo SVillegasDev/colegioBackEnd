@@ -22,6 +22,8 @@ def formatFecha(fecha):
     if(newFecha != None):
         return newFecha
     
+def index(request):
+    return render(request, "index.html")
 
 #CURSO
 
