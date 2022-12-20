@@ -46,9 +46,16 @@ class Alumno(models.Model):
     curso = models.ForeignKey(Curso,on_delete=models.CASCADE)
     promedio = models.FloatField(null=False,default=7.0)
 
+    def __str__(self):
+        nombre = self.id.nombre +" "+ self.id.apellidoPaterno +" "+ self.id.apellidoMaterno
+        return nombre
+
 class Asignatura(models.Model):
     id = models.BigAutoField(auto_created=True,primary_key=True)
     nombre = models.CharField(max_length=45,null=False)
+    
+    def __str__(self):
+        return self.nombre
 
 class Calificacion(models.Model):
     id = models.BigAutoField(auto_created=True,primary_key=True)

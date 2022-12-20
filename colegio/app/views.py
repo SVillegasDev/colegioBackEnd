@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from app.models import *
-from app import forms
+from app.forms import *
 from .serializers import ProfesorSerializer
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework import status
 from django.http import Http404
@@ -22,15 +23,15 @@ def formatFecha(fecha):
         return newFecha
     
 def panelAlumno(request,id):
-    alumno = forms.AlumnoForm()
+    alumno = AlumnoForm()
     datos = {'form':alumno}
     return render(request,'panelAlumno.html',datos)
 
 def panelRegistroAlumno(request):
-    formAlumno = forms.AlumnoForm()
+    formAlumno = AlumnoForm()
     alumnos = Alumno.objects.all()
     if request.method == 'POST':
-        formAlumno = forms.AlumnoForm(request.POST)
+        formAlumno = AlumnoForm(request.POST)
         if formAlumno.is_valid():
             nombre = formAlumno['nombre'].value()
             apellidoPaterno = formAlumno['apellidoPaterno'].value()
@@ -53,6 +54,7 @@ def panelRegistroAlumno(request):
             direccion.save()
             direcciones = Direccion.objects.all()
             direccion = direcciones[len(direcciones)-1]
+
             usuario = User()
             usuario.username = nombre.strip()[0] + apellidoPaterno.strip() + fecha[3:5]
             usuario.password = password
@@ -63,6 +65,7 @@ def panelRegistroAlumno(request):
             usuario.nacimiento = nacimiento
             usuario.institucion = institucion
             usuario.save()
+
             usuarios = User.objects.all()
             usuario = usuarios[len(usuarios) -1]
             alumno = Alumno()
@@ -70,11 +73,12 @@ def panelRegistroAlumno(request):
             alumno.curso = curso
             alumno.save()
             print("Usuario almacenado correctamente")
+
     datos = {'forms':formAlumno,'alumnos':alumnos}
     return render(request,'alumno/panelRegistroAlumno.html',datos)
 
 def panelCurso(request):
-    formCurso = forms.CursoForm()
+    formCurso = CursoForm()
     cursos = Curso.objects.all()
     if request.method == 'POST':
         nombre = request.POST['nombre']
@@ -97,7 +101,7 @@ def borrarCurso(**id):
     return redirect('../panelCurso')
 
 def panelAsignatura(request):
-    formAsignatura = forms.AsignaturaForm()
+    formAsignatura = AsignaturaForm()
     asignaturas = Asignatura.objects.all()
     if request.method == 'POST':
         nombre = request.POST['nombre']
@@ -118,6 +122,22 @@ def borrarAsignatura(**kwargs):
     asignatura.delete()
     return redirect('../panelAsignatura')
 
+def panelCalificacion(request):
+    formCalificaciones = CalificacionForm()
+    datos = {'forms':formCalificaciones}
+    try:
+        action = request.POST['action']
+        if action == 'cursoAlumnos':
+            data = []
+            for alum in Alumno.objects.all():
+                if(str(alum.curso.id) == request.POST['id']):
+                    data.append({'id':alum.id.id,'nombre':alum.id.nombre,'apellidoPaterno':alum.id.apellidoPaterno,'apellidoMaterno':alum.id.apellidoMaterno,'promedio':alum.promedio})
+            return JsonResponse(data,safe=False)
+        else:
+           print("ha ocurrido un error")  
+    except Exception as e:
+        print("error\n---> "+str(e))
+    return render(request,'calificacion/panelCalificacion.html',datos)
 
 def panelAdministrador(request):
     return render(request, 'panelAdministrador.html')
